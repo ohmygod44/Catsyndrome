@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatsSyndrome - 猫が世界を征服する    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #735757;
+            overflow-x: hidden;
+        }
+
+        /* ヘッダー */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(90, 65, 65, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d5f9ff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff8bbf;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #ec9ce5 0%, #b8e4ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.3"/><circle cx="20" cy="20" r="0.5" fill="white" opacity="0.5"/><circle cx="80" cy="30" r="0.8" fill="white" opacity="0.4"/><circle cx="30" cy="80" r="0.6" fill="white" opacity="0.6"/><circle cx="70" cy="70" r="0.4" fill="white" opacity="0.3"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(255, 24, 116, 0.548);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #9bd8ea;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* ロケットアニメーション */
+    .cat {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #2e3f9a;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            animation: fly 8s linear infinite;
+        }
+
+        .cat::before {
+            content: '🐱';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* セクション共通スタイル */
+        section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            padding: 0 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #433535;
+        }
+
+        /* サービスセクション */
+        .services {
+            background: #f8f9fa;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(47, 38, 82, 0.192);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #da7f9f;
+        }
+
+        /* プロセスセクション */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #ee8bbc;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* フッター */
+        footer {
+            background: #000000;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        /* アニメーション */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fly {
+            0% {
+                left: -100px;
+                top: 60%;
+            }
+            50% {
+                left: 50%;
+                top: 20%;
+            }
+            100% {
+                left: calc(100% + 100px);
+                top: 80%;
+            }
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">😼 CatSyndrome</a>
+            <ul class="nav-links">
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#process">ちゅーる寄付の過程</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="cat"></div>
+        <div class="hero-content">
+            <h1>ネコとゴジラ</h1>
+            <p>ジャスミンと猫が<br>あなたの周りをホバリングしています。</p>
+            <a href="#contact" class="cta-button">いい香りだね</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Service</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🎬 コンセプト制作</h3>
+                    <p>毎日せっせこ毛づくろいしてるにゃー。落ちた毛は人間が処理してくれるにゃ。下っ端には向いてる仕事だニャー。</p>
+                </div>
+                <div class="service-card">
+                    <h3>🤝 コラボレーション</h3>
+                    <p>お客様との関係を重視してるにゃ。これからは一緒にお昼寝してあげるにゃー。枕はあげないにゃ</p>
+                </div>
+                <div class="service-card">
+                    <h3>📱 宣言</h3>
+                    <p>食物連鎖の頂点にふさわしいのはねこなんだにゃー。いますぐそこをどくんだにゃ！！！！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="container">
+        <h2>制作プロセス</h2>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>発見</h3>
+                <p>道端にかわいいお花があったにゃ</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>構想</h3>
+                <p>これからはゴジラともタッグを組むにゃー</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>生活りずむ</h3>
+                <p>暇なときはねるにゃ</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>俊敏性</h3>
+                <p>速さで、差をつける。</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">5</div>
+                <h3>サウンド</h3>
+                <p>リラックス効果があるにゃー。</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">6</div>
+                <h3>完成</h3>
+                <p>猫ですべてが調和した世界に。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h2>お問い合わせ</h2>
+            <p>猫とゴジラが東京の満員電車を破壊する。</p>
+            <p>📧 contact@cattogozira.com | 📞 2828-5656-288</p>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2025 CatSyndrome. ちゅーるを買ってこい。</p>
+        </div>
+    </footer>
+
+    <script>
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ヘッダーの背景透明度調整
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // サービスカードのアニメーション
+        const observeElements = document.querySelectorAll('.service-card, .process-step');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        observeElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
